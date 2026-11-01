@@ -1,0 +1,53 @@
+﻿@model IEnumerable<CabinetGestion.Models.RDV>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Medecin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Patient)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateRDV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ordonnance)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Medecin.Prenom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patient.Prenom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateRDV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ordonnance)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {idPatient=item.PatientId, idMedecin=item.MedecinId}) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
