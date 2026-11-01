@@ -38,7 +38,7 @@ namespace CabinetGestion.Controllers
             var rDV = await _context.RDV
                 .Include(r => r.Medecin)
                 .Include(r => r.Patient)
-                .FirstOrDefaultAsync(m => m.PatientId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (rDV == null)
             {
                 return NotFound();
@@ -74,15 +74,14 @@ namespace CabinetGestion.Controllers
         }
 
         // GET: RDVs/Edit/5
-        public async Task<IActionResult> Edit(int? idPatient, int? idMedecin)
+        public async Task<IActionResult> Edit(int? id)
         {
-            
-            if (idPatient == null||idMedecin==null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var rDV = await _context.RDV.FindAsync(idPatient,idMedecin);
+            var rDV = await _context.RDV.FindAsync(id);
             if (rDV == null)
             {
                 return NotFound();
@@ -98,23 +97,24 @@ namespace CabinetGestion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit( [Bind("MedecinId,PatientId,DateRDV,Ordonnance")] RDV rDV)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,MedecinId,PatientId,DateRDV,Ordonnance")] RDV rDV)
         {
-           
-          
+            if (id != rDV.Id)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
 
                 try
                 {
-                    _context.RDV.Where(n => n.PatientId == rDV.PatientId);
-                    _context.RDV.Where(m => m.MedecinId == rDV.MedecinId);
                     _context.Update(rDV);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RDVExists(rDV.PatientId))
+                    if (!RDVExists(rDV.Id))
                     {
                         return NotFound();
                     }
@@ -141,7 +141,7 @@ namespace CabinetGestion.Controllers
             var rDV = await _context.RDV
                 .Include(r => r.Medecin)
                 .Include(r => r.Patient)
-                .FirstOrDefaultAsync(m => m.PatientId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (rDV == null)
             {
                 return NotFound();
@@ -163,7 +163,7 @@ namespace CabinetGestion.Controllers
 
         private bool RDVExists(int id)
         {
-            return _context.RDV.Any(e => e.PatientId == id);
+            return _context.RDV.Any(e => e.Id == id);
         }
     }
 }

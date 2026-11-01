@@ -29,6 +29,7 @@
         {
 
         }
+        public int Id { get; set; }
         public int MedecinId { get; set; }
         public virtual Medecin Medecin { get; set; }
         public int PatientId { get; set; }

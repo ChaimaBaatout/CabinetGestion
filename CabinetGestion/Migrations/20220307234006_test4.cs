@@ -20,7 +20,7 @@ namespace CabinetGestion.Migrations
                 column: "MedecinId",
                 principalTable: "Utilisateur",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.SetNull);
+                onDelete: ReferentialAction.NoAction);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_RDV_Utilisateur_PatientId",
@@ -28,7 +28,7 @@ namespace CabinetGestion.Migrations
                 column: "PatientId",
                 principalTable: "Utilisateur",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.SetNull);
+                onDelete: ReferentialAction.NoAction);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

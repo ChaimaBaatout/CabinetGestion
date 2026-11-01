@@ -42,6 +42,11 @@ namespace CabinetGestion.Migrations
 
             modelBuilder.Entity("CabinetGestion.Models.RDV", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
@@ -54,9 +59,11 @@ namespace CabinetGestion.Migrations
                     b.Property<string>("Ordonnance")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PatientId", "MedecinId");
+                    b.HasKey("Id");
 
                     b.HasIndex("MedecinId");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("RDV");
                 });
@@ -150,13 +157,13 @@ namespace CabinetGestion.Migrations
                     b.HasOne("CabinetGestion.Models.Medecin", "Medecin")
                         .WithMany("RdvList")
                         .HasForeignKey("MedecinId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CabinetGestion.Models.Patient", "Patient")
                         .WithMany("lRDV")
                         .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Medecin");

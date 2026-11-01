@@ -28,11 +28,17 @@ namespace CabinetGestion.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
-            builder.Entity<RDV>().HasKey(table => new {
-                table.PatientId,
-                table.MedecinId
-                
-            });
+            builder.Entity<RDV>()
+                .HasOne(r => r.Medecin)
+                .WithMany(m => m.RdvList)
+                .HasForeignKey(r => r.MedecinId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<RDV>()
+                .HasOne(r => r.Patient)
+                .WithMany(p => p.lRDV)
+                .HasForeignKey(r => r.PatientId)
+                .OnDelete(DeleteBehavior.Restrict);
          
         }
 

@@ -21,9 +21,7 @@ Pages de création, consultation, modification et suppression pour :
 
 ## Limites actuelles
 
-- La suppression d'un rendez-vous échoue : `DeleteConfirmed` cherche le rendez-vous avec une seule valeur, alors que sa clé en contient deux.
-- Un patient ne peut avoir qu'un seul rendez-vous avec un même médecin, à cause de cette clé composée.
-- La migration `test4` utilise `SET NULL` sur des colonnes obligatoires, ce qui peut faire échouer `Update-Database`.
+- Un médecin ou un patient qui a des rendez-vous ne peut pas être supprimé tant que ces rendez-vous existent.
 - Il n'y a pas de page de connexion ni de contrôle d'accès.
 - Les mots de passe des utilisateurs ne sont pas chiffrés : ne pas utiliser de vraies données.
 
